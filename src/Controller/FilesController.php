@@ -45,7 +45,15 @@ class FilesController extends AppController
     {
         $file = $this->Files->newEmptyEntity();
         if ($this->request->is('post')) {
+            $uploadedFile = $this->request->getUploadedFiles();
+
+            $uploadedFile['attachment']->moveTo(WWW_ROOT . 'img' . DS . $uploadedFile['attachment']->getClientFilename());
+
+
+
             $file = $this->Files->patchEntity($file, $this->request->getData());
+
+
             if ($this->Files->save($file)) {
                 $this->Flash->success(__('The file has been saved.'));
 
